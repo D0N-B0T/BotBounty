@@ -7,40 +7,14 @@ bot = telebot.TeleBot(secrets.TELEGRAM_TOKEN)
 
 
 #subdomain enumeration
-#active:
-    #wordlist bruteforce
-        #amass
-    #permutational bruteforce
-        #subbrute
-    #virtual hosts
-        #dnssearch
+def subdomain_enum(domain):
+    print("[+] Subdomain enumeration started")
+    print("[+] Active enumeration started")
+    print("[+] Doing wordlist brute force")
+    print("[+] Starting amass scan")
+    
+    return "Subdomain enumeration finished"
 
-#passive
-    #github
-        #github subdomains
-    #search engines
-        #amass
-        #assetfinder
-        #subfinder
-    #asn
-        #nmap
-        #httpx
-        #amas intel -asn
-    #ssl certs
-        #crt.sh
-        #crt_enum_psql.py
-        #certspotter
-    #hacker's search engines
-        #shodan
-            #shodan
-            #shosubgo
-        #censys
-        #securitytrails
-        #cloudflare
-    #js parsing
-        #httpx -> gospider
-    #recursive enumeration
-        #subdomains -> same tools
 
 
 
