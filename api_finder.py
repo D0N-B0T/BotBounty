@@ -73,7 +73,7 @@ def getastra(message):
         bot.send_message(message.chat.id, "Please enter a valid URL")
 
     
-#test
+
     
 
     
