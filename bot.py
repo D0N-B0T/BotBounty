@@ -27,14 +27,8 @@ def send_welcome(message):
     bot.send_message(message.chat.id, "[2] + Starting DNSX subdomain brute force.\n\n")
     bot.send_message(message.chat.id, "[3] + Starting subdomain enumeration...")  
     send_welcome.process = subfinder()
-    bot.send_message(message.chat.id, "Here you have your subs:\n\n")
-    #wait for subfinder to finish
-    while subfinder.process.is_alive():
-        pass
-    #read subfinder output
-    with open(send_welcome.args + '.subfinder.txt', 'r') as f:
-        for line in f:
-            bot.send_message(message.chat.id, line)
+    
+    
     bot.send_message(message.chat.id, "Done.\n\n")
     bot.send_document(message.chat.id, open(send_welcome.args + '.subfinder.txt', 'rb'))
 
@@ -101,7 +95,8 @@ def nuclei():
 
 @bot.message_handler(commands=['astra'])
 def getastra(message):
-
+    bot.send_message(message.chat.id, "Running... Please wait.\n\n")
+    #wait 1 second
     #retrieve arg and send it to the astra script
     os.system('echo {} | python3 Astra.py > output.txt'.format(message.text[7:]))
     
@@ -119,7 +114,15 @@ def getastra(message):
     else:
         bot.send_message(message.chat.id, "Please enter a valid URL")
 
-    
+@bot.message_handler(commands=['arjun'])
+def getarjun(message):
+    bot.send_message(message.chat.id, "Running... Please wait.\n\n")
+    os.system('arjun -u {} > arjun.txt'.format(message.text[7:]))
+    bot.send_document(message.chat.id, open('arjun.txt', 'rb'))
+    bot.send_message(message.chat.id, "Done!")
+
+
+
 
 
 bot.polling()
