@@ -69,8 +69,8 @@ def send_welcome(message):
 
 
 #? create directory
-def mkdir(args):
-    os.system('mkdir {args}'.format(args=args))
+def mkdir():
+    os.system('mkdir {args}'.format(args=send_welcome.args))
 
 #0 sonar search tld
 def sonar_rapid7():
