@@ -12,10 +12,6 @@ def send_welcome(message):
     bot.send_message(message.chat.id, "Hello, Im a Bug Bounty Bot.\nI can do the whole bounty thingy for you.\n\n")
     bot.send_message(message.chat.id, "To start, send me a domain with /domain <url>.\n\n")
 
-
-
-
-
 @bot.message_handler(command="domain")
 def start_process(message):
     args = message.text
@@ -37,7 +33,7 @@ def dnsx():
 
 #2 subfinder subdomain enumeration
 def subfinder():
-    os.system('echo {} | subfinder -d '+ start_process.args +'-o {}.subdomians.txt')
+    os.system('echo {} | subfinder -d '+ start_process.args +'-o ~/BotBounty/'+ start_process.args +'.subdomians.txt')
 
 #3 gau + unfurl
 def gau():
@@ -49,7 +45,7 @@ def dnsx2():
 
 #5 reverse dns 
 def rapid72():
-    os.system('echo {} | rapid7 -o {}.rapid7.txt -i')
+    os.system('echo {} | rapid7 -o {}.rapid7.txt')
 
 #6 nrich portscan common cves
 def shodan():
