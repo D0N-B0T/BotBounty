@@ -27,7 +27,15 @@ def send_welcome(message):
     bot.send_message(message.chat.id, "[2] + Starting DNSX subdomain brute force.\n\n")
     bot.send_message(message.chat.id, "[3] + Starting subdomain enumeration...")  
     send_welcome.process = subfinder()
-    bot.send_message(message.chat.id, "Here you have your subs.\n\n")
+    bot.send_message(message.chat.id, "Here you have your subs:\n\n")
+    #wait for subfinder to finish
+    while subfinder.process.is_alive():
+        pass
+    #read subfinder output
+    with open(send_welcome.args + '.subfinder.txt', 'r') as f:
+        for line in f:
+            bot.send_message(message.chat.id, line)
+    bot.send_message(message.chat.id, "Done.\n\n")
     bot.send_document(message.chat.id, open(send_welcome.args + '.subfinder.txt', 'rb'))
 
     bot.send_message(message.chat.id, "[4] + Starting gau + unfurl.\n\n")
