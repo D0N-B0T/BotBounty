@@ -17,21 +17,22 @@ def send_welcome(message):
 @bot.message_handler(commands=['tba'])
 def tba_command(message):
     bot.send_message(message.chat.id, """
-    →Seclists\n
-    →Hash-identifier\n
-    →XSSMAP\n
-    →Smuggler\n
-    →SSRFmap\n
-    →Gmapsapiscanner\n
-    →Qsreplace\n
-    →exiftool\n
-    →XSRFProbe\n
-    →XXE Exploiter\n
-    →Rush\n
-    →Rustscan\n
-    →LFISuite\n
-    →Wapiti\n
-    →Nuclei\n
+    These tools are about to be added soon:\n\n
+    →Seclists
+    →Hash-identifier
+    →XSSMAP
+    →Smuggler
+    →SSRFmap
+    →Gmapsapiscanner
+    →Qsreplace
+    →exiftool
+    →XSRFProbe
+    →XXE Exploiter
+    →Rush
+    →Rustscan
+    →LFISuite
+    →Wapiti
+    →Nuclei
     """)
 
 #def domain command
@@ -52,10 +53,10 @@ def send_welcome(message):
     send_welcome.process = gau()
     bot.send_message(message.chat.id, "[5] + Starting get ip address.\n\n")
     send_welcome.process = dnsx2()
-    bot.send_message(message.chat.id, "[6] + Starting reverse dns.\n\n")
-    send_welcome.process = rapid72()
+    bot.send_message(message.chat.id, "[6] + Starting crtsh.\n\n")
+    send_welcome.process = crtsh() 
     bot.send_message(message.chat.id, "[7] + Starting nrich portscan common cves.\n\n")
-    send_welcome.process = shodan()
+    send_welcome.process = shodan_nrich()
     bot.send_message(message.chat.id, "[8] + Starting portscan.\n\n")
     send_welcome.process = naabu()
     bot.send_message(message.chat.id, "[9] + Starting check active domains.\n\n")
@@ -93,28 +94,36 @@ def gau():
 def dnsx2():
     os.system('dnsx -silent -a -resp-only -l {args}.subfinder.txt'.format(send_welcome.args, args=send_welcome.args))
 
-
-#5 reverse dns 
-def rapid72():
-    return
+#5 get ctrsh
+def crtsh():
+    os.system('crtsh {args} | httpx -silent -no-fallback -ports 80,443,8080,8443,8008,4000,5000,9001 | nuclei -tags log4j -o {args}.crtsh.txt'.format(send_welcome.args, args=send_welcome.args))
 
 #6 nrich portscan common cves
-def shodan():
-    return
+def shodan_nrich():
+    os.system('nrich ips.txt -o {args}.nrich.txt'.format(send_welcome.args, args=send_welcome.args))
 
 #7 portscan
 def naabu():
+    os.system('naabu  -o {args}.naabu.txt'.format(send_welcome.args, args=send_welcome.args))
     return
 
 #8 check active domains
 def httpx_check():
+    os.system('httpx -silent -check -l {args}.subfinder.txt'.format(send_welcome.args, args=send_welcome.args))
     return
 
 #9 nuclei attack
 def nuclei():
-    os.system('nuclei ')
+    os.system('nuclei -o {args}.nuclei.txt'.format(send_welcome.args, args=send_welcome.args))
 
 
+
+@bot.message_handler(commands=['nuclei'])
+def getnuclei(message):
+    bot.send_message(message.chat.id, "Running... Please wait.\n\n")
+    send_welcome.process = nuclei()
+    bot.send_document(message.chat.id, open(send_welcome.args + '.nuclei.txt', 'rb'))
+    bot.send_message(message.chat.id, "Done.")
 
 
 @bot.message_handler(commands=['astra'])
@@ -151,4 +160,3 @@ def getarjun(message):
 
 
 bot.polling()
-
