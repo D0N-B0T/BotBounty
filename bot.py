@@ -15,9 +15,8 @@ def send_welcome(message):
 
 @bot.message_handler(command="domain")
 def start_process(message):
-    args = message.text
     bot.send_message(message.chat.id, "Starting subdomain enumeration...")
-    #get args from user
+    args = message.text.split(' ')[1]
     start_process.args = args.split(' ')[1]
     bot.send_message(message.chat.id, "Subdomain enumeration started.\n\n")
     start_process.process = subfinder()
