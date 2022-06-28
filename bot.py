@@ -17,9 +17,8 @@ def send_welcome(message):
 def start_process(message):
     args = message.text
     bot.send_message(message.chat.id, "Starting subdomain enumeration...")
-    #user must send a domain as /domain <url>
-    args = args.replace("/domain ", "")
-    start_process.args = args
+    #get args from user
+    start_process.args = args.split(' ')[1]
     bot.send_message(message.chat.id, "Subdomain enumeration started.\n\n")
     start_process.process = subfinder()
     bot.send_message(message.chat.id, "Subdomain enumeration ended.\n\n")
@@ -27,46 +26,47 @@ def start_process(message):
 
 #0 sonar search tld
 def sonar_rapid7():
-    os.system('echo {} | rapid7 -o {}.rapid7.txt')
+    return
 
 #1 dnsx sub brute
 def dnsx():
-    os.system('echo {} | dnsx -o {}.dnsx.txt')
+    return
 
 #2 subfinder subdomain enumeration
 def subfinder():
-    #get args from user and start subdomain enumeration
-    subprocess.call(['subfinder', '-d', start_process.args, '-o', start_process.args + '.subfinder.txt'])
+    #use args from start_process
+    args = start_process.args
+    subprocess.call(['subfinder', '-d', args , '-o', args + '.subfinder.txt'])
     os.system('subfinder -d {args} -o {args}.subfinder.txt'.format(start_process.args, args=start_process.args))
     
 
 #3 gau + unfurl
 def gau():
-    os.system('echo {} | gau -o {}.gau.txt')
+    return
 
 #4 get ip address
 def dnsx2():
-    os.system('echo {} | dnsx2 -o {}.dnsx2.txt')
+    return
 
 #5 reverse dns 
 def rapid72():
-    os.system('echo {} | rapid7 -o {}.rapid7.txt')
+    return
 
 #6 nrich portscan common cves
 def shodan():
-    os.system('echo {} | shodan -o {}.shodan.txt')
+    return
 
 #7 portscan
 def naabu():
-    os.system('echo {} | naabu -o {}.naabu.txt')
+    return
 
 #8 check active domains
 def httpx_check():
-    os.system('echo {} | httpx3 -o {}.httpx3.txt')
+    return
 
 #9 nuclei attack
 def nuclei():
-    os.system('echo {} | nuclei -o {}.nuclei.txt')
+    return
 
 
 
