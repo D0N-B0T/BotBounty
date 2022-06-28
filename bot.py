@@ -88,7 +88,7 @@ def subfinder():
 
 #3 gau + unfurl
 def gau():
-    os.systen('gau {args} --blacklist png,jpg,gif -o {args}.gau.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('gau {args} --blacklist png,jpg,gif -o {args}.gau.txt'.format(send_welcome.args, args=send_welcome.args))
 
 #4 get ip address
 def dnsx2():
