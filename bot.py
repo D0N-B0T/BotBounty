@@ -1,8 +1,9 @@
-from multiprocessing.managers import SharedMemoryManager
+# -*- coding: utf-8 -*-
+
 import telebot
 import secrets
 import os
-import subprocess 
+
 
 bot = telebot.TeleBot(secrets.TELEGRAM_TOKEN)
 
