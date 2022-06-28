@@ -2,6 +2,7 @@ from multiprocessing.managers import SharedMemoryManager
 import telebot
 import secrets
 import os
+import subprocess 
 
 bot = telebot.TeleBot(secrets.TELEGRAM_TOKEN)
 
@@ -19,8 +20,9 @@ def start_process(message):
     #user must send a domain as /domain <url>
     args = args.replace("/domain ", "")
     start_process.args = args
-    start_process.process = subfinder()
     bot.send_message(message.chat.id, "Subdomain enumeration started.\n\n")
+    start_process.process = subfinder()
+    bot.send_message(message.chat.id, "Subdomain enumeration ended.\n\n")
 
 
 #0 sonar search tld
@@ -33,7 +35,10 @@ def dnsx():
 
 #2 subfinder subdomain enumeration
 def subfinder():
-    os.system('echo {} | subfinder -d '+ start_process.args +'-o ~/BotBounty/'+ start_process.args +'.subdomians.txt')
+    #get args from user and start subdomain enumeration
+    subprocess.call(['subfinder', '-d', start_process.args, '-o', start_process.args + '.subfinder.txt'])
+    os.system('subfinder -d {args} -o {args}.subfinder.txt'.format(start_process.args, args=start_process.args))
+    
 
 #3 gau + unfurl
 def gau():
