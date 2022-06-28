@@ -109,7 +109,7 @@ def naabu():
 
 #8 check active domains
 def httpx_check():
-    os.system('httpx -silent -check -l {args}/{args}.subfinder.txt > {args}/{args}httpx.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('httpx -l {args}/{args}.subfinder.txt -silent -check -o {args}/{args}.httpx.txt'.format(send_welcome.args, args=send_welcome.args))
     return
 
 #9 nuclei attack
