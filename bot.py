@@ -27,6 +27,9 @@ def send_welcome(message):
     bot.send_message(message.chat.id, "[2] + Starting DNSX subdomain brute force.\n\n")
     bot.send_message(message.chat.id, "[3] + Starting subdomain enumeration...")  
     send_welcome.process = subfinder()
+    bot.send_message(message.chat.id, "Here you have your subs.\n\n")
+    bot.send_document(message.chat.id, open(send_welcome.args + '.subfinder.txt', 'rb'))
+
     bot.send_message(message.chat.id, "[4] + Starting gau + unfurl.\n\n")
     bot.send_message(message.chat.id, "[5] + Starting get ip address.\n\n")
     bot.send_message(message.chat.id, "[6] + Starting reverse dns.\n\n")
@@ -34,9 +37,11 @@ def send_welcome(message):
     bot.send_message(message.chat.id, "[8] + Starting portscan.\n\n")
     bot.send_message(message.chat.id, "[9] + Starting check active domains.\n\n")
     bot.send_message(message.chat.id, "[10] + Starting nuclei attack.\n\n")
-    bot.send_message(message.chat.id, "[11] + Starting nuclei attack.\n\n")
-    bot.send_message(message.chat.id, "The end")
+    bot.send_message(message.chat.id, "BotBounty work is done. Sending you the results.\n\n")
+    #bot.send_document(message.chat.id, open(send_welcome.args + '.subfinder.txt', 'rb'))
+    bot.send_message(message.chat.id, "Done. Now you can send me a new domain with /domain <url>.")
     
+
 
 
 #0 sonar search tld
