@@ -13,13 +13,16 @@ def send_welcome(message):
     bot.send_message(message.chat.id, "Hello, Im a Bug Bounty Bot.\nI can do the whole bounty thingy for you.\n\n")
     bot.send_message(message.chat.id, "To start, send me a domain with /domain <url>.\n\n")
 
-@bot.message_handler(command="domain")
-def start_process(message):
-    bot.send_message(message.chat.id, "Starting subdomain enumeration...")
-    args = message.text.split(' ')[1]
-    start_process.args = args.split(' ')[1]
+
+
+#def domain command
+@bot.message_handler(commands=['domain'])
+def send_welcome(message):
+    bot.send_message(message.chat.id, "Starting subdomain enumeration...")  
+    args = message.text
+    send_welcome.args = args.split(' ')[1]
     bot.send_message(message.chat.id, "Subdomain enumeration started.\n\n")
-    start_process.process = subfinder()
+    send_welcome.process = subfinder()
     bot.send_message(message.chat.id, "Subdomain enumeration ended.\n\n")
 
 
@@ -34,9 +37,9 @@ def dnsx():
 #2 subfinder subdomain enumeration
 def subfinder():
     #use args from start_process
-    args = start_process.args
+    args = send_welcome.args
     subprocess.call(['subfinder', '-d', args , '-o', args + '.subfinder.txt'])
-    os.system('subfinder -d {args} -o {args}.subfinder.txt'.format(start_process.args, args=start_process.args))
+    os.system('subfinder -d {args} -o {args}.subfinder.txt'.format(send_welcome.args, args=send_welcome.args))
     
 
 #3 gau + unfurl
