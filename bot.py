@@ -18,12 +18,25 @@ def send_welcome(message):
 #def domain command
 @bot.message_handler(commands=['domain'])
 def send_welcome(message):
-    bot.send_message(message.chat.id, "Starting subdomain enumeration...")  
     args = message.text
     send_welcome.args = args.split(' ')[1]
-    bot.send_message(message.chat.id, "Subdomain enumeration started.\n\n")
+    bot.send_message(message.chat.id, "Running... Please wait.\n\n")
+    bot.send_message(message.chat.id, "The whole process can take a while.\n\n")
+    bot.send_message(message.chat.id, "[1] + Starting Sonar search with Rapid7.\n\n")
+    send_welcome.process = sonar_rapid7()
+    bot.send_message(message.chat.id, "[2] + Starting DNSX subdomain brute force.\n\n")
+    bot.send_message(message.chat.id, "[3] + Starting subdomain enumeration...")  
     send_welcome.process = subfinder()
-    bot.send_message(message.chat.id, "Subdomain enumeration ended.\n\n")
+    bot.send_message(message.chat.id, "[4] + Starting gau + unfurl.\n\n")
+    bot.send_message(message.chat.id, "[5] + Starting get ip address.\n\n")
+    bot.send_message(message.chat.id, "[6] + Starting reverse dns.\n\n")
+    bot.send_message(message.chat.id, "[7] + Starting nrich portscan common cves.\n\n")
+    bot.send_message(message.chat.id, "[8] + Starting portscan.\n\n")
+    bot.send_message(message.chat.id, "[9] + Starting check active domains.\n\n")
+    bot.send_message(message.chat.id, "[10] + Starting nuclei attack.\n\n")
+    bot.send_message(message.chat.id, "[11] + Starting nuclei attack.\n\n")
+    bot.send_message(message.chat.id, "The end")
+    
 
 
 #0 sonar search tld
@@ -38,8 +51,8 @@ def dnsx():
 def subfinder():
     #use args from start_process
     args = send_welcome.args
-    subprocess.call(['subfinder', '-d', args , '-o', args + '.subfinder.txt'])
-    os.system('subfinder -d {args} -o {args}.subfinder.txt'.format(send_welcome.args, args=send_welcome.args))
+    #subprocess.call(['subfinder', '-d', args , '-o', args + '.subfinder.txt'])
+    os.system('subfinder -d {args} -s -o {args}.subfinder.txt'.format(send_welcome.args, args=send_welcome.args))
     
 
 #3 gau + unfurl
