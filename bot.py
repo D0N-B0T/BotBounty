@@ -15,25 +15,6 @@ def send_welcome(message):
     bot.send_message(message.chat.id, "To start, send me a domain with /domain <url>.\n\n")
 
 
-@bot.message_handler(commands=['tba'])
-def tba_command(message):
-    bot.send_message(message.chat.id, """
-    These tools are about to be added soon:\n\n
-    →Seclists
-    →Hash-identifier
-    →XSSMAP
-    →Smuggler
-    →SSRFmap
-    →Gmapsapiscanner
-    →Qsreplace
-    →exiftool
-    →XSRFProbe
-    →XXE Exploiter
-    →Rush
-    →Rustscan
-    →LFISuite
-    →Wapiti
-    """)
 
 #def domain command
 @bot.message_handler(commands=['domain'])
