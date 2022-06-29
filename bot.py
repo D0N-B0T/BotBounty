@@ -44,15 +44,23 @@ def send_welcome(message):
     send_welcome.process = httpx_check()
     bot.send_message(message.chat.id, "[10] + Starting nuclei attack.\n\n")
     send_welcome.process = nuclei()
-    bot.send_message(message.chat.id, "BotBounty work is done. Sending you the results.\n\n")
-    #bot.send_document(message.chat.id, open(send_welcome.args + '.subfinder.txt', 'rb'))
-    bot.send_message(message.chat.id, "Done.")
+    bot.send_message(message.chat.id, "BotBounty work is done. Sending now the results.\n\n")
+    send_welcome.process = end()
+    bot.send_message(message.chat.id, "Subdomains:\n\n")
+    bot.send_document(message.chat.id, open('{args}/{args}.subdomains.txt'.format(args=send_welcome.args), 'rb'))
+    bot.send_message(message.chat.id, "Links:\n\n")
+    bot.send_document(message.chat.id, open('{args}/{args}.links.txt'.format(args=send_welcome.args), 'rb'))
+    bot.send_message(message.chat.id, "DNSX:\n\n")
+    bot.send_document(message.chat.id, open('{args}/{args}.dnsx.txt'.format(args=send_welcome.args), 'rb'))
+    bot.send_message(message.chat.id, "Nuclei:\n\n")
+    bot.send_document(message.chat.id, open('{args}/{args}.nuclei.txt'.format(args=send_welcome.args), 'rb'))
     
 
 
-#? create directory
+#? create directory if not exist
 def mkdir():
-    os.system('mkdir {args}'.format(args=send_welcome.args))
+    if not os.path.exists(send_welcome.args):
+        os.system('mkdir {args}'.format(args=send_welcome.args))
 
 #0 sonar search tld
 def sonar_rapid7():
@@ -64,7 +72,7 @@ def dnsx():
 
 #2 subfinder subdomain enumeration
 def subfinder():
-    os.system('subfinder -d {args} -o {args}/{args}.subfinder.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('subfinder -silent -d {args} -o {args}/{args}.subfinder.txt'.format(send_welcome.args, args=send_welcome.args))
     
 #3 gau + unfurl
 def gau():
@@ -76,7 +84,7 @@ def dnsx2():
 
 #5 get ctrsh
 def crtsh():
-    os.system('crtsh search --domain %.{args} --plain | httpx -silent -no-fallback -ports 80,443,8080,8443,8008,4000,5000,9001 | nuclei -tags log4j -o {args}/{args}.crtsh.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('crtsh search --domain %.{args} --plain | anew > {args}/{args}.crtsh.txt'.format(send_welcome.args, args=send_welcome.args))
 
 #6 nrich portscan common cves
 def shodan_nrich():
@@ -88,11 +96,29 @@ def naabu():
 
 #8 check active domains
 def httpx_check():
-    os.system('httpx -l {args}/{args}.subfinder.txt -silent -check -o {args}/{args}.httpx.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('httpx -l {args}/{args}.subfinder.txt -silent -o {args}/{args}.httpx.txt'.format(send_welcome.args, args=send_welcome.args))
 
 #9 nuclei attack
 def nuclei():
     os.system('nuclei -o {args}/{args}.nuclei.txt'.format(send_welcome.args, args=send_welcome.args))
+
+#end
+def end():
+    os.system('cat {args}/{args}.sonar.txt >> {args}/{args}.subtemp.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('cat {args}/{args}.crtsh.txt >> {args}/{args}.subtemp.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('cat {args}/{args}.subfinder.txt >> {args}/{args}.subtemp.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('cat {args}/{args}.subtemp.txt | anew  > {args}/{args}.subdomains.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('rm {args}/{args}.subtemp.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('cat {args}/{args}.gau.txt >> {args}/{args}.linktemp.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('cat {args}/{args}.httpx.txt >> {args}/{args}.linktemp.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('cat {args}/{args}.linktemp.txt | anew  > {args}/{args}.links.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('rm {args}/{args}.linktemp.txt'.format(send_welcome.args, args=send_welcome.args))
+
+
+
+
+
+
 
 
 @bot.message_handler(commands=['nuclei'])
