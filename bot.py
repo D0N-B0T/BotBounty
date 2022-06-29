@@ -168,7 +168,7 @@ def end():
     os.system('rm {args}/{args}.linktemp.txt'.format(send_welcome.args, args=send_welcome.args))
 
 
-@bot.message_handler(commands=['arjun'])
+@bot.message_handler(commands=['nuclei'])
 def getnuclei(message):
     bot.send_message(message.chat.id, "Running... Please wait.\n\n")
     os.system('nuclei -u {} -c 150 -severity low,medium,high,critical -etags "intrusive" > nuclei.txt'.format(message.text[7:]))
