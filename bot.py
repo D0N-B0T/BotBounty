@@ -20,13 +20,11 @@ def send_welcome(message):
 @bot.message_handler(commands=['domain'])
 def send_welcome(message):
     args = message.text
-    lastMessageId = message[-1].message_id
-    lastChatId = message[-1].chat.id
-    
     send_welcome.args = args.split(' ')[1]
     bot.send_message(message.chat.id, "Running... Please wait.\n\n")
     bot.send_message(message.chat.id, "The whole process can take a while.\n\n")   
-    bot.send_message(message.chat.id, "[⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜]")
+    msg = bot.send_message(message.chat.id, "[⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜]")
+    lastMessageId = msg.chat.id
     bot.edit_message_text(lastMessageId, text="[⬛⬜⬜⬜⬜⬜⬜⬜⬜⬜]")
     send_welcome.process = mkdir()
     #use message_id of the last message
