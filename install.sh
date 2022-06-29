@@ -9,18 +9,19 @@ sudo apt-get install golang-go
 wget https://git.io/go-installer.sh && sudo bash go-installer.sh
 git clone https://github.com/knqyf263/crtsh.git
 cd crtsh
-go build
-mv crtsh ~/go/bin/crtsh
+sudo go build -buildvcs=false
+sudo mv crtsh ~/go/bin/crtsh  
 cd
 go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 go install github.com/lc/gau/v2/cmd/gau@latest
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
+go install -v github.com/tomnomnom/anew@latest
 wget https://gitlab.com/api/v4/projects/33695681/packages/generic/nrich/latest/nrich_latest_amd64.deb
 sudo dpkg -i nrich_latest_amd64.deb
 sudo apt install -y libpcap-dev
-go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
 git clone https://github.com/s0md3v/Arjun.git
 python3 setup.py install
 
