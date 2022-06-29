@@ -22,38 +22,56 @@ def send_welcome(message):
     args = message.text
     send_welcome.args = args.split(' ')[1]
     bot.send_message(message.chat.id, "Running... Please wait.\n\n")
-    bot.send_message(message.chat.id, "The whole process can take a while.\n\n")
+    bot.send_message(message.chat.id, "The whole process can take a while.\n\n")   
+    bot.send_message(message.chat.id, "[⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜]")
     send_welcome.process = mkdir()
-    bot.send_message(message.chat.id, "[1] + Starting Sonar search with Rapid7.\n\n")
+    bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id, text="[⬛⬜⬜⬜⬜⬜⬜⬜⬜⬜]")
     send_welcome.process = sonar_rapid7()
-    bot.send_message(message.chat.id, "[2] + Starting DNSX subdomain brute force.\n\n")
+    bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id, text="[⬛⬛⬜⬜⬜⬜⬜⬜⬜⬜]")
     send_welcome.process = dnsx()
-    bot.send_message(message.chat.id, "[3] + Starting subdomain enumeration...")  
+    bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id, text="[⬛⬛⬛⬜⬜⬜⬜⬜⬜⬜]")
     send_welcome.process = subfinder()
-    bot.send_message(message.chat.id, "[4] + Starting gau + unfurl.\n\n")
+    bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id, text="[⬛⬛⬛⬛⬜⬜⬜⬜⬜⬜]")
     send_welcome.process = gau()
-    bot.send_message(message.chat.id, "[5] + Starting get ip address.\n\n")
+    bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id, text="[⬛⬛⬛⬛⬛⬜⬜⬜⬜⬜]")
     send_welcome.process = dnsx2()
-    bot.send_message(message.chat.id, "[6] + Starting crtsh.\n\n")
-    send_welcome.process = crtsh() 
-    bot.send_message(message.chat.id, "[7] + Starting nrich portscan common cves.\n\n")
+    bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id, text="[⬛⬛⬛⬛⬛⬛⬜⬜⬜⬜]")
+    send_welcome.process = crtsh()
+    bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id, text="[⬛⬛⬛⬛⬛⬛⬛⬜⬜⬜]")
     send_welcome.process = shodan_nrich()
-    bot.send_message(message.chat.id, "[8] + Starting portscan.\n\n")
+    bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id, text="[⬛⬛⬛⬛⬛⬛⬛⬛⬜⬜]")
     send_welcome.process = naabu()
-    bot.send_message(message.chat.id, "[9] + Starting check active domains.\n\n")
+    bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id, text="[⬛⬛⬛⬛⬛⬛⬛⬛⬛⬜]")
     send_welcome.process = httpx_check()
-    bot.send_message(message.chat.id, "[10] + Starting nuclei attack.\n\n")
+    bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id, text="[⬛⬛⬛⬛⬛⬛⬛⬛⬛🔳]")
     send_welcome.process = nuclei()
+    bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id, text="[⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛]")
     bot.send_message(message.chat.id, "BotBounty work is done. Sending now the results.\n\n")
     send_welcome.process = end()
     bot.send_message(message.chat.id, "Subdomains:\n\n")
-    bot.send_document(message.chat.id, open('{args}/{args}.subdomains.txt'.format(args=send_welcome.args), 'rb'))
+    #if file is empty, send message
+    if os.stat('{args}/{args}.subdomains.txt'.format(args=send_welcome.args)).st_size == 0:
+        bot.send_message(message.chat.id, "No subdomains found.\n\n")
+    else:
+        bot.send_document(message.chat.id, open('{args}/{args}.subdomains.txt'.format(args=send_welcome.args), 'rb'))
     bot.send_message(message.chat.id, "Links:\n\n")
-    bot.send_document(message.chat.id, open('{args}/{args}.links.txt'.format(args=send_welcome.args), 'rb'))
+    #if file is empty, send message
+    if os.stat('{args}/{args}.links.txt'.format(args=send_welcome.args)).st_size == 0:
+        bot.send_message(message.chat.id, "No links found.\n\n")
+    else:
+        bot.send_document(message.chat.id, open('{args}/{args}.links.txt'.format(args=send_welcome.args), 'rb'))
     bot.send_message(message.chat.id, "IPs:\n\n")
-    bot.send_document(message.chat.id, open('{args}/{args}.dnsx_ips.txt'.format(args=send_welcome.args), 'rb'))
+    #if file is empty, send message
+    if os.stat('{args}/{args}.dnsx_ips.txt'.format(args=send_welcome.args)).st_size == 0:
+        bot.send_message(message.chat.id, "No IPs found.\n\n")  
+    else:
+        bot.send_document(message.chat.id, open('{args}/{args}.dnsx_ips.txt'.format(args=send_welcome.args), 'rb'))
     bot.send_message(message.chat.id, "Nuclei:\n\n")
-    bot.send_document(message.chat.id, open('{args}/{args}.nuclei.txt'.format(args=send_welcome.args), 'rb'))
+    #if file is empty, send message
+    if os.stat('{args}/{args}.nuclei.txt'.format(args=send_welcome.args)).st_size == 0:
+        bot.send_message(message.chat.id, "No nuclei found.\n\n")
+    else:
+        bot.send_document(message.chat.id, open('{args}/{args}.nuclei.txt'.format(args=send_welcome.args), 'rb'))
     
 
 
