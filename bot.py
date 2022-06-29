@@ -1,9 +1,9 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import telebot
 import secrets
 import os
-
 
 bot = telebot.TeleBot(secrets.TELEGRAM_TOKEN)
 
@@ -83,7 +83,6 @@ def dnsx():
 
 #2 subfinder subdomain enumeration
 def subfinder():
-    #use args from start_process
     os.system('subfinder -d {args} -o {args}/{args}.subfinder.txt'.format(send_welcome.args, args=send_welcome.args))
     
 #3 gau + unfurl
@@ -100,22 +99,19 @@ def crtsh():
 
 #6 nrich portscan common cves
 def shodan_nrich():
-    os.system('nrich {args}.dnsx_ips.txt -o {args}/{args}.cves_nrich.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('nrich {args}/{args}.dnsx_ips.txt -o {args}/{args}.cves_nrich.txt'.format(send_welcome.args, args=send_welcome.args))
 
 #7 portscan
 def naabu():
     os.system('naabu  -l {args}/{args}.subfinder.txt -s -o {args}/{args}.naabu.txt'.format(send_welcome.args, args=send_welcome.args))
-    return
 
 #8 check active domains
 def httpx_check():
     os.system('httpx -l {args}/{args}.subfinder.txt -silent -check -o {args}/{args}.httpx.txt'.format(send_welcome.args, args=send_welcome.args))
-    return
 
 #9 nuclei attack
 def nuclei():
     os.system('nuclei -o {args}/{args}.nuclei.txt'.format(send_welcome.args, args=send_welcome.args))
-
 
 
 @bot.message_handler(commands=['nuclei'])
@@ -129,12 +125,7 @@ def getnuclei(message):
 @bot.message_handler(commands=['astra'])
 def getastra(message):
     bot.send_message(message.chat.id, "Running... Please wait.\n\n")
-    #wait 1 second
-    #retrieve arg and send it to the astra script
     os.system('echo {} | python3 Astra.py > output.txt'.format(message.text[7:]))
-    
-
-    #if args start with http:// or https://, send it to the astra script
     arg = message.text[7:]
     if arg.startswith('http://') or arg.startswith('https://'):
         if os.path.getsize('output.txt') > 4000:
@@ -156,7 +147,21 @@ def getarjun(message):
     bot.send_message(message.chat.id, "Done!")
 
 
+from tqdm import tqdm
+
+
+#create a tqdm progress bar for the /domain command
+def tqdm_domain(domain):
+    for i in tqdm(range(1, 100)):
+        time.sleep(0.1)
+        pass
+    return domain
+    
 
 
 
-bot.polling()
+
+
+
+
+bot.infinity_polling(none_stop=True)
