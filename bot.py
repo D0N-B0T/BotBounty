@@ -4,7 +4,7 @@
 import telebot
 import secrets
 import os
-
+import time
 bot = telebot.TeleBot(secrets.TELEGRAM_TOKEN)
 
 
@@ -22,12 +22,12 @@ def send_welcome(message):
     args = message.text
     send_welcome.args = args.split(' ')[1]
     bot.send_message(message.chat.id, "Running... Please wait.\n\n")
-    bot.send_message(message.chat.id, "The whole process can take a while.\n\n")   
+    bot.send_message(message.chat.id, "The whole process can take a while...\n\n")   
     msg = bot.send_message(message.chat.id, "[⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜]")
     send_welcome.process = mkdir()
     bot.edit_message_text("[🔳⬜⬜⬜⬜⬜⬜⬜⬜⬜]", msg.chat.id, msg.message_id)
     send_welcome.process = sonar_rapid7()
-    bot.edit_message_text("[⬛🔳⬜⬜⬜⬜⬜⬜⬜]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[⬛🔳⬜⬜⬜⬜⬜⬜⬜⬜]", msg.chat.id, msg.message_id)
     send_welcome.process = dnsx()
     bot.edit_message_text("[⬛⬛🔳⬜⬜⬜⬜⬜⬜⬜]", msg.chat.id, msg.message_id)
     send_welcome.process = subfinder()
@@ -46,7 +46,39 @@ def send_welcome(message):
     bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛⬛⬛🔳]", msg.chat.id, msg.message_id)
     send_welcome.process = nuclei()
     bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
-    bot.delete_message(msg.chat.id, msg.message_id)
+    time.sleep(1)
+    bot.edit_message_text("[✅✅✅✅✅✅✅✅✅✅]", msg.chat.id, msg.message_id)
+    time.sleep(1)
+    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
+    time.sleep(1)
+    bot.edit_message_text("[✅✅✅✅✅✅✅✅✅✅]", msg.chat.id, msg.message_id)
+    time.sleep(1)
+    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
+    time.sleep(1)
+    bot.edit_message_text("[✅✅✅✅✅✅✅✅✅✅]", msg.chat.id, msg.message_id)
+    time.sleep(1)
+    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛⬛⬛D]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛⬛DO]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛DON]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛DONE]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[⬛⬛⬛⬛⬛DONE⬛]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[⬛⬛⬛⬛DONE⬛⬛]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[⬛⬛⬛DONE⬛⬛⬛]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[⬛⬛DONE⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[⬛DONE⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[DONE⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[ONE⬛⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[NE⬛⬛⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[E⬛⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
+
+
+    
+
+    
+    
+
+
     bot.send_message(message.chat.id, "BotBounty work is done. Sending now the results.\n\n")
     send_welcome.process = end()
     bot.send_message(message.chat.id, "Subdomains:\n\n")
@@ -132,12 +164,6 @@ def end():
     os.system('cat {args}/{args}.httpx.txt >> {args}/{args}.linktemp.txt'.format(send_welcome.args, args=send_welcome.args))
     os.system('cat {args}/{args}.linktemp.txt | anew  > {args}/{args}.links.txt'.format(send_welcome.args, args=send_welcome.args))
     os.system('rm {args}/{args}.linktemp.txt'.format(send_welcome.args, args=send_welcome.args))
-
-
-
-
-
-
 
 
 @bot.message_handler(commands=['nuclei'])
