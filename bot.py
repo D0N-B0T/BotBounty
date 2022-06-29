@@ -172,7 +172,11 @@ def end():
 def getnuclei(message):
     bot.send_message(message.chat.id, "Running... Please wait.\n\n")
     os.system('nuclei -u {} -c 150 -severity low,medium,high,critical -etags "intrusive" > nuclei.txt'.format(message.text[7:]))
-    bot.send_document(message.chat.id, open('nuclei.txt', 'rb'))
+    if os.path.size('nuclei.txt') > 0:
+        bot.send_document(message.chat.id, open('nuclei.txt', 'rb'))
+    else:
+        bot.send_message(message.chat.id, "No results found")
+    os.system('rm nuclei.txt')
     os.system('rm arjun.txt')   
     bot.send_message(message.chat.id, "Done!")
 
