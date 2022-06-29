@@ -110,7 +110,7 @@ def gau():
 
 #4 get ip address
 def dnsx2():
-    os.system('subfinder -silent -d bip.cl | dnsx -silent -a -resp-only -o {args}/{args}.dnsx_ips.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('subfinder -silent -d {args} | dnsx -silent -a -resp-only -o {args}/{args}.dnsx_ips.txt'.format(send_welcome.args, args=send_welcome.args))
 
 #5 get ctrsh
 def crtsh():
