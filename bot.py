@@ -171,11 +171,10 @@ def end():
 @bot.message_handler(commands=['nuclei'])
 def getnuclei(message):
     bot.send_message(message.chat.id, "Running... Please wait.\n\n")
-    os.system('nuclei {} -c 150 -severity low,medium,high,critical -etags "intrusive" -o "nuclei.txt"'.format(message.text[7:]))
-    #send document
+    os.system('nuclei {} -c 150 -severity low,medium,high,critical -etags "intrusive" > nuclei.txt'.format(message.text[7:]))
     bot.send_document(message.chat.id, open('nuclei.txt', 'rb'))
     os.system('rm nuclei.txt')
-    
+
 
 
 @bot.message_handler(commands=['astra'])
