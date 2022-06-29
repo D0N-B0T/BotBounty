@@ -57,27 +57,6 @@ def send_welcome(message):
     time.sleep(1)
     bot.edit_message_text("[✅✅✅✅✅✅✅✅✅✅]", msg.chat.id, msg.message_id)
     time.sleep(1)
-    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛⬛⬛D]", msg.chat.id, msg.message_id)
-    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛⬛DO]", msg.chat.id, msg.message_id)
-    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛DON]", msg.chat.id, msg.message_id)
-    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛DONE]", msg.chat.id, msg.message_id)
-    bot.edit_message_text("[⬛⬛⬛⬛⬛DONE⬛]", msg.chat.id, msg.message_id)
-    bot.edit_message_text("[⬛⬛⬛⬛DONE⬛⬛]", msg.chat.id, msg.message_id)
-    bot.edit_message_text("[⬛⬛⬛DONE⬛⬛⬛]", msg.chat.id, msg.message_id)
-    bot.edit_message_text("[⬛⬛DONE⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
-    bot.edit_message_text("[⬛DONE⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
-    bot.edit_message_text("[DONE⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
-    bot.edit_message_text("[ONE⬛⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
-    bot.edit_message_text("[NE⬛⬛⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
-    bot.edit_message_text("[E⬛⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
-    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
-
-
-    
-
-    
-    
-
 
     bot.send_message(message.chat.id, "BotBounty work is done. Sending now the results.\n\n")
     send_welcome.process = end()
