@@ -19,11 +19,12 @@ go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
 go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
 go install -v github.com/tomnomnom/anew@latest
+go install github.com/OJ/gobuster/v3@latest
 wget https://gitlab.com/api/v4/projects/33695681/packages/generic/nrich/latest/nrich_latest_amd64.deb
 sudo dpkg -i nrich_latest_amd64.deb
 sudo apt install -y libpcap-dev
 git clone https://github.com/s0md3v/Arjun.git
 python3 setup.py install
-
-
+pip3 install py-altdns==1.0.2
+go install github.com/tomnomnom/assetfinder@latest
 
