@@ -136,7 +136,7 @@ def httpx_check():
 
 #9 nuclei attack
 def nuclei():
-    os.system('nuclei -c 150 -l "livedomains-{args}.txt" -severity low,medium,high,critical -etags "intrusive" -o "{args}/{args}.nuclei.txt"')
+    os.system('nuclei -c 150 -list "livedomains-{args}.txt" -severity low,medium,high,critical -etags "intrusive" -o "{args}/{args}.nuclei.txt"')
                 
 
 
@@ -168,13 +168,13 @@ def end():
     os.system('rm {args}/{args}.linktemp.txt'.format(send_welcome.args, args=send_welcome.args))
 
 
-@bot.message_handler(commands=['nuclei'])
+@bot.message_handler(commands=['arjun'])
 def getnuclei(message):
     bot.send_message(message.chat.id, "Running... Please wait.\n\n")
-    os.system('nuclei {} -c 150 -severity low,medium,high,critical -etags "intrusive" > nuclei.txt'.format(message.text[7:]))
+    os.system('nuclei -u {} -c 150 -severity low,medium,high,critical -etags "intrusive" > nuclei.txt'.format(message.text[7:]))
     bot.send_document(message.chat.id, open('nuclei.txt', 'rb'))
-    os.system('rm nuclei.txt')
-
+    os.system('rm arjun.txt')   
+    bot.send_message(message.chat.id, "Done!")
 
 
 @bot.message_handler(commands=['astra'])
@@ -193,6 +193,7 @@ def getastra(message):
     else:
         bot.send_message(message.chat.id, "Please enter a valid URL")
 
+
 @bot.message_handler(commands=['arjun'])
 def getarjun(message):
     bot.send_message(message.chat.id, "Running... Please wait.\n\n")
@@ -204,6 +205,7 @@ def getarjun(message):
 
 
 
+    os.system('nuclei {} -c 150 -severity low,medium,high,critical -etags "intrusive" > nuclei.txt'.format(message.text[7:]))
 
         
 bot.infinity_polling(timeout=10, long_polling_timeout=5)
