@@ -50,8 +50,8 @@ def send_welcome(message):
     bot.send_document(message.chat.id, open('{args}/{args}.subdomains.txt'.format(args=send_welcome.args), 'rb'))
     bot.send_message(message.chat.id, "Links:\n\n")
     bot.send_document(message.chat.id, open('{args}/{args}.links.txt'.format(args=send_welcome.args), 'rb'))
-    bot.send_message(message.chat.id, "DNSX:\n\n")
-    bot.send_document(message.chat.id, open('{args}/{args}.dnsx.txt'.format(args=send_welcome.args), 'rb'))
+    bot.send_message(message.chat.id, "IPs:\n\n")
+    bot.send_document(message.chat.id, open('{args}/{args}.dnsx_ips.txt'.format(args=send_welcome.args), 'rb'))
     bot.send_message(message.chat.id, "Nuclei:\n\n")
     bot.send_document(message.chat.id, open('{args}/{args}.nuclei.txt'.format(args=send_welcome.args), 'rb'))
     
