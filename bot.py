@@ -147,19 +147,6 @@ def getarjun(message):
     bot.send_message(message.chat.id, "Done!")
 
 
-from tqdm import tqdm
-
-
-#create a tqdm progress bar for the /domain command
-def tqdm_domain(domain):
-    for i in tqdm(range(1, 100)):
-        time.sleep(0.1)
-        pass
-    return domain
-    
-
-
-
 
 
 
