@@ -241,26 +241,26 @@ def getFfuf(message):
     arg = message.text
     #command will have two arguments after the command
     #first argument is the url
-    url_arg = arg.split()[2]
+    url_arg = arg.split()[1]
     #second argument is the wordlist
-    wordlist_arg = arg.split()[1]
+    wordlist_arg = arg.split()[2]
     #if the wordlist_arg is 'general':
-    if arg == 'general':
+    if wordlist_arg == 'general':
         os.system('ffuf -u {} -w fuzz/SecLists/Discovery/Web_Content/Discovery_DNS_Records/DNS_Records_General_Purpose.txt -o output.txt'.format(url_arg))
     #if the wordlist_arg is 'spanish':
-    elif arg == 'spanish': 
+    elif wordlist_arg == 'spanish': 
         os.system('ffuf -u {} -w fuzz/SecLists/Miscellaneous/lang-spanish.txt -o output.txt'.format(url_arg))
     #if the wordlist_arg is 'english':
-    elif arg == 'english':
+    elif wordlist_arg == 'english':
         os.system('ffuf -u {} -w fuzz/SecLists/Miscellaneous/lang-english.txt -o output.txt'.format(url_arg))
     #if the wordlist_arg is 'deutsch':
-    elif arg == 'deutsch':
+    elif wordlist_arg == 'deutsch':
         os.system('ffuf -u {} -w fuzz/SecLists/Miscellaneous/lang-deutsch.txt -o output.txt'.format(url_arg))
     #if the wordlist_arg is 'api':
-    elif arg == 'api':
+    elif wordlist_arg == 'api':
         os.system('ffuf -u {} -w fuzz/SecLists/Discovery/Web_Content/common-api-endpoints-mazen160.tx -o output.txt'.format(url_arg))
     #if the wordlist_arg is not valid:
-    elif arg =='otro':
+    elif wordlist_arg =='otro':
         os.system('ffuf -u {} -w {} -o output.txt'.format(url_arg, wordlist_arg))
     else:
         bot.send_message(message.chat.id, "Please enter a valid wordlist")
