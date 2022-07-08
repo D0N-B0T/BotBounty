@@ -225,7 +225,7 @@ def getarjun(message):
 @bot.message_handler(commands=['ffuf'])
 def getFfuf(message):
     bot.send_message(message.chat.id, "Command format: /ffuf <url> <wordlist>\n\n URL MUST HAVE 'FUZZ' SOMEWHERE.")
-    bot.send_message(message.chat.id, "wordlists: general, spanish, english")
+    bot.send_message(message.chat.id, "wordlists: general, spanish, english, deutsch, api")
     
     wordlist_arg = message.text
     #user send /ffuf url word , save word in "wordlist_arg" variable and save url in "url_arg" variable
