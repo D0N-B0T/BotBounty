@@ -259,7 +259,7 @@ def getFfuf(message):
 
 
     bot.send_message(message.chat.id, "Running... Please wait.\n\n")
-    os.system('ffuf -u {url_arg} -w '+ wordlist +' -o ffuf.txt'.format(url_arg=url_arg, wordlist_arg=wordlist_arg))
+    os.system('./ffuf/ffuf -u {url_arg} -w '+ wordlist +' -o ffuf.txt'.format(url_arg=url_arg, wordlist_arg=wordlist_arg))
 
 
     bot.send_document(message.chat.id, open('ffuf.txt', 'rb'))
