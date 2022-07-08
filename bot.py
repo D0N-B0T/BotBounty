@@ -33,23 +33,23 @@ def send_welcome(message):
     send_welcome.process = mkdir()
     bot.edit_message_text("[🔳⬜⬜⬜⬜⬜⬜⬜⬜⬜] + Running Sonar scan", msg.chat.id, msg.message_id)
     send_welcome.process = sonar_rapid7()
-    bot.edit_message_text("[⬛🔳⬜⬜⬜⬜⬜⬜⬜⬜] + Running DNSX", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[🔳🔳⬜⬜⬜⬜⬜⬜⬜⬜] + Running DNSX", msg.chat.id, msg.message_id)
     send_welcome.process = dnsx()
-    bot.edit_message_text("[⬛⬛🔳⬜⬜⬜⬜⬜⬜⬜] + Running Subfinder", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[🔳🔳🔳⬜⬜⬜⬜⬜⬜⬜] + Running Subfinder", msg.chat.id, msg.message_id)
     send_welcome.process = subfinder()
-    bot.edit_message_text("[⬛⬛⬛🔳⬜⬜⬜⬜⬜⬜] + Running Get all Urls", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[🔳🔳🔳🔳⬜⬜⬜⬜⬜⬜] + Running Get all Urls", msg.chat.id, msg.message_id)
     send_welcome.process = gau()
-    bot.edit_message_text("[⬛⬛⬛⬛🔳⬜⬜⬜⬜⬜] + Running DNSX again", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[🔳🔳🔳🔳🔳⬜⬜⬜⬜⬜] + Running DNSX again", msg.chat.id, msg.message_id)
     send_welcome.process = dnsx2()
-    bot.edit_message_text("[⬛⬛⬛⬛⬛🔳⬜⬜⬜⬜] + Running CRT.SH", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[🔳🔳🔳🔳🔳🔳⬜⬜⬜⬜] + Running CRT.SH", msg.chat.id, msg.message_id)
     send_welcome.process = crtsh()
-    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛🔳⬜⬜⬜] + Running nrich", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[🔳🔳🔳🔳🔳🔳🔳⬜⬜⬜] + Running nrich", msg.chat.id, msg.message_id)
     send_welcome.process = shodan_nrich()
-    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛🔳⬜⬜] + Running Naabu", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[🔳🔳🔳🔳🔳🔳🔳🔳⬜⬜] + Running Naabu", msg.chat.id, msg.message_id)
     send_welcome.process = naabu()
-    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛⬛🔳⬜] + Running httpx", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[🔳🔳🔳🔳🔳🔳🔳🔳🔳⬜] + Running httpx", msg.chat.id, msg.message_id)
     send_welcome.process = httpx_check()
-    bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛⬛⬛🔳] + Running nuclei", msg.chat.id, msg.message_id)
+    bot.edit_message_text("[🔳🔳🔳🔳🔳🔳🔳🔳🔳🔳] + Running nuclei", msg.chat.id, msg.message_id)
     send_welcome.process = nuclei()
     bot.edit_message_text("[⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛]", msg.chat.id, msg.message_id)
     time.sleep(1)
@@ -64,7 +64,8 @@ def send_welcome(message):
     bot.edit_message_text("[✅✅✅✅✅✅✅✅✅✅]", msg.chat.id, msg.message_id)
     time.sleep(1)
 
-    bot.send_message(message.chat.id, "BotBounty work is done. Sending now the results.\n\n")
+    bot.send_message(message.chat.id, "BotBounty work is done.\n\n")
+    bot.reply_to(message, "Sending now the results.\n\n")
     send_welcome.process = end()
     bot.send_message(message.chat.id, "Subdomains:\n\n")
     #if file is empty, send message
@@ -137,7 +138,7 @@ def httpx_check():
 
 #9 nuclei attack
 def nuclei():
-    os.system('nuclei -c 150 -list "livedomains-{args}.txt" -severity low,medium,high,critical -etags "intrusive" -o "{args}/{args}.nuclei.txt"').format(send_welcome.args, args=send_welcome.args)
+    os.system('nuclei -c 150 -list "livedomains-{args}.txt" -severity low,medium,high,critical -etags "intrusive" -o "{args}/{args}.nuclei.txt"'.format(send_welcome.args, args=send_welcome.args))
     
 
 
