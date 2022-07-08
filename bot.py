@@ -67,30 +67,35 @@ def send_welcome(message):
     bot.send_message(message.chat.id, "BotBounty work is done.\n\n")
     bot.reply_to(message, "Sending now the results.\n\n")
     send_welcome.process = end()
+
+    
+    #subdomains
     bot.send_message(message.chat.id, "Subdomains:\n\n")
-    #if file is empty, send message
-    if os.stat('{args}/{args}.subdomains.txt'.format(args=send_welcome.args)).st_size == 0:
-        bot.send_message(message.chat.id, "No subdomains found.\n\n")
-    else:
+    if os.path.exists('{args}/{args}.subdomains.txt'.format(args=send_welcome.args)):
         bot.send_document(message.chat.id, open('{args}/{args}.subdomains.txt'.format(args=send_welcome.args), 'rb'))
+    else:
+        bot.send_message(message.chat.id, "No subdomains found.\n\n")
+    
+    #links
     bot.send_message(message.chat.id, "Links:\n\n")
-    #if file is empty, send message
-    if os.stat('{args}/{args}.links.txt'.format(args=send_welcome.args)).st_size == 0:
-        bot.send_message(message.chat.id, "No links found.\n\n")
-    else:
+    if os.path.exists('{args}/{args}.links.txt'.format(args=send_welcome.args)):
         bot.send_document(message.chat.id, open('{args}/{args}.links.txt'.format(args=send_welcome.args), 'rb'))
-    bot.send_message(message.chat.id, "IPs:\n\n")
-    #if file is empty, send message
-    if os.stat('{args}/{args}.dnsx_ips.txt'.format(args=send_welcome.args)).st_size == 0:
-        bot.send_message(message.chat.id, "No IPs found.\n\n")  
     else:
+        bot.send_message(message.chat.id, "No links found.\n\n")
+    #ips
+    bot.send_message(message.chat.id, "IPs:\n\n")
+    if os.path.exists('{args}/{args}.dnsx_ips.txt'.format(args=send_welcome.args)):
         bot.send_document(message.chat.id, open('{args}/{args}.dnsx_ips.txt'.format(args=send_welcome.args), 'rb'))
+    else:
+        bot.send_message(message.chat.id, "No IPs found.\n\n")
+
+    #nuclei
     bot.send_message(message.chat.id, "Nuclei:\n\n")
-    #if file is empty, send message
-    if os.stat('{args}/{args}.nuclei.txt'.format(args=send_welcome.args)).st_size != 0:
+    if os.path.exists('{args}/{args}.nuclei.txt'.format(args=send_welcome.args)):
+        bot.send_message(message.chat.id, 'Nuclei completed. Found some (potential) issues.\n\n')
         bot.send_document(message.chat.id, open('{args}/{args}.nuclei.txt'.format(args=send_welcome.args), 'rb'))
     else:
-        bot.send_message(message.chat.id, "No nuclei found.\n\n")
+        bot.send_message(message.chat.id, "Nuclei completed. No issues found.\n\n")
         
     
 
