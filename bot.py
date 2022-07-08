@@ -245,18 +245,23 @@ def getFfuf(message):
     wordlist_arg = wordlist_arg.split(' ')[2]
 
     if wordlist_arg == "general":
-        wordlist = "Discovery/Web_Content/Discovery_DNS_Records/DNS_Records_General_Purpose.txt"
+        wordlist = "fuzz/SecLists/Discovery/Web_Content/Discovery_DNS_Records/DNS_Records_General_Purpose.txt"
     elif wordlist_arg == "spanish":
-        wordlist = "Miscellaneous/lang-spanish.txt"
+        wordlist = "fuzz/SecLists/Miscellaneous/lang-spanish.txt"
     elif wordlist_arg == "english":
-        wordlist = "Miscellaneous/lang-english.txt"
+        wordlist = "fuzz/SecLists/Miscellaneous/lang-english.txt"
     elif wordlist_arg  == "deutsch":
-        wordlist = "Miscellaneous/lang-deutsch.txt"
+        wordlist = "fuzz/SecLists/Miscellaneous/lang-deutsch.txt"
     elif wordlist_arg == "api":
-        wordlist = "Discovery/Web_Content/common-api-endpoints-mazen160.txt"
+        wordlist = "fuzz/SecLists/Discovery/Web_Content/common-api-endpoints-mazen160.txt"
+    else:
+        wordlist = "fuzz/fuzz.txt"
+
 
     bot.send_message(message.chat.id, "Running... Please wait.\n\n")
-    os.system('ffuf -c -u {url_arg} -w fuzz/SecLists/'+ wordlist +' -o ffuf.txt'.format(url_arg=url_arg, wordlist_arg=wordlist_arg))
+    os.system('ffuf -u {url_arg} -w '+ wordlist +' -o ffuf.txt'.format(url_arg=url_arg, wordlist_arg=wordlist_arg))
+
+
     bot.send_document(message.chat.id, open('ffuf.txt', 'rb'))
     os.system('rm ffuf.txt')   
     bot.send_message(message.chat.id, "Done!")
