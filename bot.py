@@ -143,7 +143,11 @@ def httpx_check():
 
 #9 nuclei attack
 def nuclei():
-    os.system('nuclei -c 150 -list "livedomains-{args}.txt" -severity low,medium,high,critical -etags "intrusive" -o "{args}/{args}.nuclei.txt"'.format(send_welcome.args, args=send_welcome.args))
+    os.system('cat {args}/{args}.sonar.txt >> {args}/{args}.subtemp.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('cat {args}/{args}.crtsh.txt >> {args}/{args}.subtemp.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('cat {args}/{args}.subfinder.txt >> {args}/{args}.subtemp.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('cat {args}/{args}.subtemp.txt | anew  >> {args}/{args}.subdomains.txt'.format(send_welcome.args, args=send_welcome.args))
+    os.system('nuclei -c 150 -list "{args}/{args}.subdomains.txt" -severity low,medium,high,critical -etags "intrusive" -o "{args}/{args}.nuclei.txt"'.format(send_welcome.args, args=send_welcome.args))
     
 
 
