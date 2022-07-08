@@ -20,6 +20,8 @@ def send_welcome(message):
 @bot.message_handler(commands=['domain'])
 def send_welcome(message):
     args = message.text
+    #save time of start of script
+    start_time = time.time()
     send_welcome.args = args.split(' ')[1]
     if send_welcome.args.startswith('http://') or send_welcome.args.startswith('https://'):
         send_welcome.args = send_welcome.args.split('//')[1]
@@ -66,9 +68,7 @@ def send_welcome(message):
 
     bot.send_message(message.chat.id, "BotBounty work is done.\n\n")
     bot.reply_to(message, "Sending now the results.\n\n")
-    send_welcome.process = end()
-
-    
+    send_welcome.process = end()   
     #subdomains
     bot.send_message(message.chat.id, "Subdomains:\n\n")
     if os.path.exists('{args}/{args}.subdomains.txt'.format(args=send_welcome.args)):
@@ -97,7 +97,7 @@ def send_welcome(message):
     else:
         bot.send_message(message.chat.id, "Nuclei completed. No issues found.\n\n")
         
-    
+    bot.send_message(message.chat.id, "Process done after {time} seconds.\n\n".format(time=time.time() - start_time))
 
 
 #? create directory if not exist
@@ -158,6 +158,15 @@ def altdns():
 def gobustervhost():
     os.system('gobuster vhost -u {args}/{args}.domains.txt -o {args}/{args}.vhosts.txt'.format(send_welcome.args, args=send_welcome.args))
 
+def udpscan_500():
+    os.system('naabu -p 500 -l {args}/{args}.ips.txt -silent -o {args}/{args}.udpscan_500.txt'.format(send_welcome.args, args=send_welcome.args))
+
+def jsonscanner():
+    #curl subdomains / links and save in file, then grep the file for  "[{" and save in file 
+    return
+
+
+
 
 
 
@@ -210,6 +219,34 @@ def getarjun(message):
     os.system('arjun -u {} -oT arjun.txt'.format(message.text[7:]))
     bot.send_document(message.chat.id, open('arjun.txt', 'rb'))
     os.system('rm arjun.txt')   
+    bot.send_message(message.chat.id, "Done!")
+
+
+@bot.message_handler(commands=['ffuf'])
+def getFfuf(message):
+    bot.send_message(message.chat.id, "Command format: /ffuf <url> <wordlist>\n\n URL MUST HAVE 'FUZZ' SOMEWHERE.")
+    bot.send_message(message.chat.id, "wordlists: general, spanish, english")
+    
+    wordlist_arg = message.text
+    #user send /ffuf url word , save word in "wordlist_arg" variable and save url in "url_arg" variable
+    url_arg = wordlist_arg.split(' ')[1]
+    wordlist_arg = wordlist_arg.split(' ')[2]
+
+    if wordlist_arg == "general":
+        wordlist = "Discovery/Web_Content/Discovery_DNS_Records/DNS_Records_General_Purpose.txt"
+    elif wordlist_arg == "spanish":
+        wordlist = "Miscellaneous/lang-spanish.txt"
+    elif wordlist_arg == "english":
+        wordlist = "Miscellaneous/lang-english.txt"
+    elif wordlist_arg  == "deutsch":
+        wordlist = "Miscellaneous/lang-deutsch.txt"
+    elif wordlist_arg == "api":
+        wordlist = "Discovery/Web_Content/common-api-endpoints-mazen160.txt"
+
+    bot.send_message(message.chat.id, "Running... Please wait.\n\n")
+    os.system('ffuf -c -u {url_arg} -w fuzz/SecLists/'+wordlist+' -o ffuf.txt'.format(url_arg=url_arg, wordlist_arg=wordlist_arg))
+    bot.send_document(message.chat.id, open('ffuf.txt', 'rb'))
+    os.system('rm ffuf.txt')   
     bot.send_message(message.chat.id, "Done!")
 
 
