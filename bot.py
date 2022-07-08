@@ -86,10 +86,11 @@ def send_welcome(message):
         bot.send_document(message.chat.id, open('{args}/{args}.dnsx_ips.txt'.format(args=send_welcome.args), 'rb'))
     bot.send_message(message.chat.id, "Nuclei:\n\n")
     #if file is empty, send message
-    if os.stat('{args}/{args}.nuclei.txt'.format(args=send_welcome.args)).st_size == 0:
-        bot.send_message(message.chat.id, "No nuclei found.\n\n")
-    else:
+    if os.stat('{args}/{args}.nuclei.txt'.format(args=send_welcome.args)).st_size != 0:
         bot.send_document(message.chat.id, open('{args}/{args}.nuclei.txt'.format(args=send_welcome.args), 'rb'))
+    else:
+        bot.send_message(message.chat.id, "No nuclei found.\n\n")
+        
     
 
 
@@ -136,8 +137,8 @@ def httpx_check():
 
 #9 nuclei attack
 def nuclei():
-    os.system('nuclei -c 150 -list "livedomains-{args}.txt" -severity low,medium,high,critical -etags "intrusive" -o "{args}/{args}.nuclei.txt"')
-                
+    os.system('nuclei -c 150 -list "livedomains-{args}.txt" -severity low,medium,high,critical -etags "intrusive" -o "{args}/{args}.nuclei.txt"').format(send_welcome.args, args=send_welcome.args)
+    
 
 
 #nuevos
@@ -206,9 +207,6 @@ def getarjun(message):
     bot.send_message(message.chat.id, "Done!")
 
 
-
-
-    os.system('nuclei {} -c 150 -severity low,medium,high,critical -etags "intrusive" > nuclei.txt'.format(message.text[7:]))
 
         
 bot.infinity_polling(timeout=10, long_polling_timeout=5)
