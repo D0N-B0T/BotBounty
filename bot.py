@@ -240,43 +240,39 @@ def getFfuf(message):
     
     arg = message.text
     #command will have two arguments after the command
-    if len(wordlist_arg.split()) == 3:
-        #first argument is the url
-        url_arg = arg.split()[2]
-        #second argument is the wordlist
-        wordlist_arg = arg.split()[1]
-        #if the wordlist_arg is 'general':
-        if arg == 'general':
-            os.system('ffuf -u {} -w fuzz/SecLists/Discovery/Web_Content/Discovery_DNS_Records/DNS_Records_General_Purpose.txt -o output.txt'.format(url_arg))
-        #if the wordlist_arg is 'spanish':
-        elif arg == 'spanish': 
-            os.system('ffuf -u {} -w fuzz/SecLists/Miscellaneous/lang-spanish.txt -o output.txt'.format(url_arg))
-        #if the wordlist_arg is 'english':
-        elif arg == 'english':
-            os.system('ffuf -u {} -w fuzz/SecLists/Miscellaneous/lang-english.txt -o output.txt'.format(url_arg))
-        #if the wordlist_arg is 'deutsch':
-        elif arg == 'deutsch':
-            os.system('ffuf -u {} -w fuzz/SecLists/Miscellaneous/lang-deutsch.txt -o output.txt'.format(url_arg))
-        #if the wordlist_arg is 'api':
-        elif arg == 'api':
-            os.system('ffuf -u {} -w fuzz/SecLists/Discovery/Web_Content/common-api-endpoints-mazen160.tx -o output.txt'.format(url_arg))
-        #if the wordlist_arg is not valid:
-        elif arg =='otro':
-            os.system('ffuf -u {} -w {} -o output.txt'.format(url_arg, wordlist_arg))
-        else:
-            bot.send_message(message.chat.id, "Please enter a valid wordlist")
+    #first argument is the url
+    url_arg = arg.split()[2]
+    #second argument is the wordlist
+    wordlist_arg = arg.split()[1]
+    #if the wordlist_arg is 'general':
+    if arg == 'general':
+        os.system('ffuf -u {} -w fuzz/SecLists/Discovery/Web_Content/Discovery_DNS_Records/DNS_Records_General_Purpose.txt -o output.txt'.format(url_arg))
+    #if the wordlist_arg is 'spanish':
+    elif arg == 'spanish': 
+        os.system('ffuf -u {} -w fuzz/SecLists/Miscellaneous/lang-spanish.txt -o output.txt'.format(url_arg))
+    #if the wordlist_arg is 'english':
+    elif arg == 'english':
+        os.system('ffuf -u {} -w fuzz/SecLists/Miscellaneous/lang-english.txt -o output.txt'.format(url_arg))
+    #if the wordlist_arg is 'deutsch':
+    elif arg == 'deutsch':
+        os.system('ffuf -u {} -w fuzz/SecLists/Miscellaneous/lang-deutsch.txt -o output.txt'.format(url_arg))
+    #if the wordlist_arg is 'api':
+    elif arg == 'api':
+        os.system('ffuf -u {} -w fuzz/SecLists/Discovery/Web_Content/common-api-endpoints-mazen160.tx -o output.txt'.format(url_arg))
+    #if the wordlist_arg is not valid:
+    elif arg =='otro':
+        os.system('ffuf -u {} -w {} -o output.txt'.format(url_arg, wordlist_arg))
+    else:
+        bot.send_message(message.chat.id, "Please enter a valid wordlist")
 
 
         #if the file is empty, send a message
-        if os.stat('output.txt').st_size == 0:
-            bot.send_message(message.chat.id, "No results found")
-        else:
-            bot.send_document(message.chat.id, open('output.txt', 'rb'))
-            os.system('rm output.txt')
+    if os.stat('output.txt').st_size == 0:
+        bot.send_message(message.chat.id, "No results found")
     else:
-        bot.send_message(message.chat.id, "Please enter a valid URL and wordlist")
-
-
+        bot.send_document(message.chat.id, open('output.txt', 'rb'))
+        os.system('rm output.txt')
+        
 
 
         
