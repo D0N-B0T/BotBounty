@@ -89,6 +89,13 @@ def send_welcome(message):
     else:
         bot.send_message(message.chat.id, "No IPs found.\n\n")
 
+    #CVEs
+    bot.send_message(message.chat.id, "CVEs:\n\n")
+    if os.path.exists('{args}/{args}.cves_nrich.txt'.format(args=send_welcome.args)):
+        bot.send_document(message.chat.id, open('{args}/{args}.cves_nrich.txt'.format(args=send_welcome.args), 'rb'))
+    else:
+        bot.send_message(message.chat.id, "No CVEs found.\n\n")        
+
     #nuclei
     bot.send_message(message.chat.id, "Nuclei:\n\n")
     if os.path.exists('{args}/{args}.nuclei.txt'.format(args=send_welcome.args)):
@@ -232,6 +239,7 @@ def getFfuf(message):
     bot.send_message(message.chat.id, "wordlists: general, spanish, english, deutsch, api")
     
     wordlist_arg = message.text
+    wordlist = "Discovery/Web_Content/Discovery_DNS_Records/DNS_Records_General_Purpose.txt"
     #user send /ffuf url word , save word in "wordlist_arg" variable and save url in "url_arg" variable
     url_arg = wordlist_arg.split(' ')[1]
     wordlist_arg = wordlist_arg.split(' ')[2]
@@ -248,7 +256,7 @@ def getFfuf(message):
         wordlist = "Discovery/Web_Content/common-api-endpoints-mazen160.txt"
 
     bot.send_message(message.chat.id, "Running... Please wait.\n\n")
-    os.system('ffuf -c -u {url_arg} -w fuzz/SecLists/'+wordlist+' -o ffuf.txt'.format(url_arg=url_arg, wordlist_arg=wordlist_arg))
+    os.system('ffuf -c -u {url_arg} -w fuzz/SecLists/'+ wordlist +' -o ffuf.txt'.format(url_arg=url_arg, wordlist_arg=wordlist_arg))
     bot.send_document(message.chat.id, open('ffuf.txt', 'rb'))
     os.system('rm ffuf.txt')   
     bot.send_message(message.chat.id, "Done!")
